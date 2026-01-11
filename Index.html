@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Airdrop Tracker</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <h1>🪂 Airdrop Tracker</h1>
+
+  <form id="airdropForm">
+    <input id="name" required placeholder="Project Name">
+    <input id="chain" placeholder="Chain (ETH, ARB, etc)">
+
+    <select id="status">
+      <option value="Rumored">Rumored</option>
+      <option value="Confirmed">Confirmed</option>
+      <option value="Snapshot">Snapshot</option>
+      <option value="Claim Live">Claim Live</option>
+      <option value="Paid">Paid</option>
+    </select>
+
+    <select id="priority">
+      <option value="High">High</option>
+      <option value="Medium">Medium</option>
+      <option value="Low">Low</option>
+    </select>
+
+    <input id="capital" type="number" placeholder="Capital Used ($)">
+    <input id="notes" placeholder="Notes">
+
+    <button type="submit">➕ Add / Update Project</button>
+  </form>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Project</th>
+        <th>Chain</th>
+        <th>Status</th>
+        <th>Priority</th>
+        <th>Capital</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody id="tableBody"></tbody>
+  </table>
+
+  <script src="app.js"></script>
+</body>
+</html>
