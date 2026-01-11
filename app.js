@@ -9,20 +9,21 @@ const tableBody = document.getElementById("tableBody");
 function renderTable() {
   tableBody.innerHTML = "";
 
-  projects.forEach((p, index) => {
-    tableBody.innerHTML += `
-      <tr>
-        <td>${p.name}</td>
-        <td>${p.chain}</td>
-        <td>${p.status}</td>
-        <td>${p.priority}</td>
-        <td>$${p.capital}</td>
-        <td>
-          <button onclick="editProject(${index})">✏️ Edit</button>
-          <button onclick="removeProject(${index})">❌ Delete</button>
-        </td>
-      </tr>
-    `;
+  // Inside renderTable() in app.js
+projects.forEach((p, index) => {
+  tableBody.innerHTML += `
+    <tr>
+      <td><a href="project.html?id=${index}">${p.name}</a></td>
+      <td>${p.chain}</td>
+      <td>${p.status}</td>
+      <td>${p.priority}</td>
+      <td>$${p.capital}</td>
+      <td>
+        <button onclick="editProject(${index})">✏️ Edit</button>
+        <button onclick="removeProject(${index})">❌ Delete</button>
+      </td>
+    </tr>
+  `;
   });
 
   localStorage.setItem("projects", JSON.stringify(projects));
