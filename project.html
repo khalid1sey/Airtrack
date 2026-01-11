@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Project Details</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1 id="projectName">Project Name</h1>
+  <div id="projectDetails">
+    <p><strong>Chain:</strong> <span id="chain"></span></p>
+    <p><strong>Status:</strong> <span id="status"></span></p>
+    <p><strong>Priority:</strong> <span id="priority"></span></p>
+    <p><strong>Capital Used:</strong> $<span id="capital"></span></p>
+    <p><strong>Notes:</strong> <span id="notes"></span></p>
+    <p><strong>Last Updated:</strong> <span id="updatedAt"></span></p>
+  </div>
+  <a href="index.html">⬅ Back to Dashboard</a>
+
+  <script src="app.js"></script>
+  <script>
+    // Get project id from URL
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get('id');
+    const projects = JSON.parse(localStorage.getItem("projects")) || [];
+    if (projects[id]) {
+      const p = projects[id];
+      document.getElementById("projectName").innerText = p.name;
+      document.getElementById("chain").innerText = p.chain;
+      document.getElementById("status").innerText = p.status;
+      document.getElementById("priority").innerText = p.priority;
+      document.getElementById("capital").innerText = p.capital;
+      document.getElementById("notes").innerText = p.notes;
+      document.getElementById("updatedAt").innerText = new Date(p.updatedAt).toLocaleString();
+    } else {
+      document.getElementById("projectName").innerText = "Project Not Found";
+    }
+  </script>
+</body>
+</html>
