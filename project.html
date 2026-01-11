@@ -34,7 +34,6 @@
 
   <script src="app.js"></script>
   <script>
-    // Load project
     const params = new URLSearchParams(window.location.search);
     const id = params.get('id');
     const projects = JSON.parse(localStorage.getItem("projects")) || [];
@@ -45,7 +44,7 @@
     } else {
       const p = projects[id];
 
-      // Display main project info
+      // --- Display main project info ---
       document.getElementById("projectName").innerText = p.name;
       document.getElementById("chain").innerText = p.chain;
       document.getElementById("status").innerText = p.status;
@@ -54,13 +53,13 @@
       document.getElementById("notes").innerText = p.notes;
       document.getElementById("updatedAt").innerText = new Date(p.updatedAt).toLocaleString();
 
-      // Populate form inputs if they exist
+      // --- Populate form inputs if data exists ---
       document.getElementById("started").value = p.started || '';
       document.getElementById("checkins").value = p.checkins || 0;
       document.getElementById("userRank").value = p.userRank || '';
       document.getElementById("points").value = p.points || 0;
 
-      // Display function
+      // --- Display function ---
       function displaySavedData() {
         savedData.innerHTML = `
           <div class="card"><strong>Started:</strong> ${p.started || '-'}</div>
@@ -70,11 +69,13 @@
         `;
       }
 
-      displaySavedData(); // Initial render
+      // Initial display on page load
+      displaySavedData();
 
-      // Save custom inputs
+      // --- Save custom inputs ---
       document.getElementById("customForm").addEventListener("submit", (e) => {
         e.preventDefault();
+
         p.started = document.getElementById("started").value;
         p.checkins = Number(document.getElementById("checkins").value);
         p.userRank = document.getElementById("userRank").value.trim();
@@ -82,7 +83,8 @@
         p.updatedAt = new Date().toISOString();
 
         localStorage.setItem("projects", JSON.stringify(projects));
-        displaySavedData(); // Update display
+
+        displaySavedData(); // Update UI immediately
       });
     }
   </script>
