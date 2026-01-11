@@ -8,6 +8,7 @@
 </head>
 <body>
   <h1 id="projectName">Project Name</h1>
+
   <div id="projectDetails">
     <p><strong>Chain:</strong> <span id="chain"></span></p>
     <p><strong>Status:</strong> <span id="status"></span></p>
@@ -16,16 +17,31 @@
     <p><strong>Notes:</strong> <span id="notes"></span></p>
     <p><strong>Last Updated:</strong> <span id="updatedAt"></span></p>
   </div>
+
+  <h2>📊 Project Tracker</h2>
+  <form id="customForm">
+    <label>Started: <input type="date" id="started"></label>
+    <label>Check-ins: <input type="number" id="checkins" min="0"></label>
+    <label>User Rank: <input type="text" id="userRank" placeholder="e.g., Elite"></label>
+    <label>Points: <input type="number" id="points" min="0"></label>
+    <button type="submit">Save</button>
+  </form>
+
   <a href="index.html">⬅ Back to Dashboard</a>
 
   <script src="app.js"></script>
   <script>
-    // Get project id from URL
+    // Load project
     const params = new URLSearchParams(window.location.search);
     const id = params.get('id');
     const projects = JSON.parse(localStorage.getItem("projects")) || [];
-    if (projects[id]) {
+
+    if (!projects[id]) {
+      document.getElementById("projectName").innerText = "Project Not Found";
+    } else {
       const p = projects[id];
+
+      // Display main project info
       document.getElementById("projectName").innerText = p.name;
       document.getElementById("chain").innerText = p.chain;
       document.getElementById("status").innerText = p.status;
@@ -33,8 +49,26 @@
       document.getElementById("capital").innerText = p.capital;
       document.getElementById("notes").innerText = p.notes;
       document.getElementById("updatedAt").innerText = new Date(p.updatedAt).toLocaleString();
-    } else {
-      document.getElementById("projectName").innerText = "Project Not Found";
+
+      // Populate customizable inputs if they exist
+      document.getElementById("started").value = p.started || '';
+      document.getElementById("checkins").value = p.checkins || 0;
+      document.getElementById("userRank").value = p.userRank || '';
+      document.getElementById("points").value = p.points || 0;
+
+      // Save custom inputs
+      document.getElementById("customForm").addEventListener("submit", (e) => {
+        e.preventDefault();
+        p.started = document.getElementById("started").value;
+        p.checkins = Number(document.getElementById("checkins").value);
+        p.userRank = document.getElementById("userRank").value.trim();
+        p.points = Number(document.getElementById("points").value);
+        p.updatedAt = new Date().toISOString();
+
+        localStorage.setItem("projects", JSON.stringify(projects));
+        alert("Project updated!");
+        location.reload(); // refresh display
+      });
     }
   </script>
 </body>
