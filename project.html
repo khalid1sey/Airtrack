@@ -27,6 +27,9 @@
     <button type="submit">Save</button>
   </form>
 
+  <h2>💡 Saved Data</h2>
+  <div id="savedData" class="cards-container"></div>
+
   <a href="index.html">⬅ Back to Dashboard</a>
 
   <script src="app.js"></script>
@@ -35,6 +38,7 @@
     const params = new URLSearchParams(window.location.search);
     const id = params.get('id');
     const projects = JSON.parse(localStorage.getItem("projects")) || [];
+    const savedData = document.getElementById("savedData");
 
     if (!projects[id]) {
       document.getElementById("projectName").innerText = "Project Not Found";
@@ -50,11 +54,23 @@
       document.getElementById("notes").innerText = p.notes;
       document.getElementById("updatedAt").innerText = new Date(p.updatedAt).toLocaleString();
 
-      // Populate customizable inputs if they exist
+      // Populate form inputs if they exist
       document.getElementById("started").value = p.started || '';
       document.getElementById("checkins").value = p.checkins || 0;
       document.getElementById("userRank").value = p.userRank || '';
       document.getElementById("points").value = p.points || 0;
+
+      // Display function
+      function displaySavedData() {
+        savedData.innerHTML = `
+          <div class="card"><strong>Started:</strong> ${p.started || '-'}</div>
+          <div class="card"><strong>Check-ins:</strong> ${p.checkins || 0}</div>
+          <div class="card"><strong>User Rank:</strong> ${p.userRank || '-'}</div>
+          <div class="card"><strong>Points:</strong> ${p.points || 0}</div>
+        `;
+      }
+
+      displaySavedData(); // Initial render
 
       // Save custom inputs
       document.getElementById("customForm").addEventListener("submit", (e) => {
@@ -66,8 +82,7 @@
         p.updatedAt = new Date().toISOString();
 
         localStorage.setItem("projects", JSON.stringify(projects));
-        alert("Project updated!");
-        location.reload(); // refresh display
+        displaySavedData(); // Update display
       });
     }
   </script>
